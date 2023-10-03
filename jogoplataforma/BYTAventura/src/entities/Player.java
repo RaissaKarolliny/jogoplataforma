@@ -100,7 +100,7 @@ public class Player extends Entity{
 	    }
 	
 	 private void carregarAnimacoes() {
-		 InputStream is = getClass().getResourceAsStream("Sprite_Pedro.png");
+		 InputStream is = getClass().getResourceAsStream("img_jogador.png");
 	        try {
 	        	BufferedImage img = ImageIO.read(is);
 	        	

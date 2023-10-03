@@ -26,7 +26,7 @@ public class EntradasDoMouse implements MouseListener, MouseMotionListener {
     @Override
     public void mouseClicked(MouseEvent e) {
     	if(e.getButton() == MouseEvent.BUTTON1)
-    		PainelDoJogo.getJogo().getPlayer().setAtaque(true);
+    		painelDoJogo.getJogo().getPlayer().setAtaque(true);
     }
 
     @Override

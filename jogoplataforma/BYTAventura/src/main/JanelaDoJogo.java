@@ -19,7 +19,7 @@ public class JanelaDoJogo {
         jframe.addWindowFocusListener(new WindowFocusListener() {
         	@Override
         	public void windowLostFocus(WindowEvent e) {
-        		PainelDoJogo.getJogo().windowFocusLost();
+        		painelDoJogo.getJogo().windowFocusLost();
         	}
         	@Override
             public void windowGainedFocus(WindowEvent e) {
