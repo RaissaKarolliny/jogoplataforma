@@ -3,6 +3,7 @@ package main;
 import java.awt.Graphics;
 
 import entities.Player;
+import levels.LevelManager;
 
 public class Jogo implements Runnable {
 
@@ -12,19 +13,29 @@ public class Jogo implements Runnable {
     private final int FPS_DEFINIDO = 120;
     private final int UPS_DEFINIDO = 200;
     private Player player;
+	private LevelManager levelManager;
+
+	public final static int TILES_DEFAULT_SIZE = 32;
+	public final static float SCALE = 1.5f;
+	public final static int TILES_IN_WIDTH = 26;
+	public final static int TILES_IN_HEIGHT = 14;
+	public final static int TILES_SIZE = (int) (TILES_DEFAULT_SIZE * SCALE);
+	public final static int GAME_WIDTH = TILES_SIZE * TILES_IN_WIDTH;
+	public final static int GAME_HEIGHT = TILES_SIZE * TILES_IN_HEIGHT;
 
     public Jogo() {
+    	initClasses();
         painelDoJogo = new PainelDoJogo(this);
         janelaDoJogo = new JanelaDoJogo(painelDoJogo);
         painelDoJogo.requestFocus();
-        initClasses();
+    
         iniciarLoopDoJogo();
         
     }
 
     private void initClasses() {
-		player = new Player(1,1);
-		
+    	player = new Player(200, 200, (int) (128 * SCALE), (int) (80 * SCALE));
+		levelManager = new LevelManager(this);
 	}
 
 	private void iniciarLoopDoJogo() {
@@ -33,12 +44,13 @@ public class Jogo implements Runnable {
     }
 
     public void atualizar() {
-        player.update();
+    	levelManager.update();
+		player.update();
     }
     
     public void render(Graphics g) {
-    	player.render(g);
-    	
+    	levelManager.draw(g);
+		player.render(g);
     }
     
     @Override

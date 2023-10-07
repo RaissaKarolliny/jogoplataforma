@@ -2,22 +2,18 @@ package main;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
-
-import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import inputs.EntradasDeTeclado;
 import inputs.EntradasDoMouse;
-
-import static utilz.Constantes.ConstantesDoJogador.*;
-import static utilz.Constantes.Direcoes.*;
+import static main.Jogo.GAME_HEIGHT;
+import static main.Jogo.GAME_WIDTH;
 
 public class PainelDoJogo extends JPanel {
-    private EntradasDoMouse entradasDoMouse;
+    
+	private EntradasDoMouse entradasDoMouse;
     private Jogo jogo;
+   
     public PainelDoJogo(Jogo jogo) {
         entradasDoMouse = new EntradasDoMouse(this);
         this.jogo = jogo;
@@ -30,7 +26,7 @@ public class PainelDoJogo extends JPanel {
     }
 
     private void definirTamanhoDoPainel() {
-        Dimension tamanho = new Dimension(920, 600);
+        Dimension tamanho = new Dimension(GAME_WIDTH, GAME_HEIGHT);
         setPreferredSize(tamanho);
     }
 

@@ -16,22 +16,20 @@ public class EntradasDoMouse implements MouseListener, MouseMotionListener {
 
     @Override
     public void mouseDragged(MouseEvent e) {
-        // TODO Auto-generated method stub
-    }
-
+    	}
     @Override
     public void mouseMoved(MouseEvent e) {
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-    	if(e.getButton() == MouseEvent.BUTTON1)
-    		painelDoJogo.getJogo().getPlayer().setAtaque(true);
+    
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-        // TODO Auto-generated method stub
+    	if(e.getButton() == MouseEvent.BUTTON1)
+    		painelDoJogo.getJogo().getPlayer().setAtaque(true);    
     }
 
     @Override

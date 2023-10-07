@@ -1,13 +1,8 @@
 package entities;
 
-import static utilz.Constantes.ConstantesDoJogador.CORRENDO;
-import static utilz.Constantes.ConstantesDoJogador.ATAQUE_1 ;
 import static utilz.Constantes.ConstantesDoJogador.ObterQuantidadeDeSprites;
-import static utilz.Constantes.ConstantesDoJogador.PARADO;
-import static utilz.Constantes.Direcoes.BAIXO;
-import static utilz.Constantes.Direcoes.CIMA;
-import static utilz.Constantes.Direcoes.DIREITA;
-import static utilz.Constantes.Direcoes.ESQUERDA;
+import static utilz.Constantes.ConstantesDoJogador.*;
+import static utilz.Constantes.Direcoes.*;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -15,7 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import javax.imageio.ImageIO;
-
+import utilz.LoadSave;
 public class Player extends Entity{
 	
 	
@@ -27,8 +22,8 @@ public class Player extends Entity{
     private boolean movimentando = false, atacando = false;
     private float playerSpeed= 1.0f;
     
-	public Player(float x, float y) {
-		super(x, y);
+	public Player(float x, float y, int width, int height) {
+		super(x, y, width, height);
 		carregarAnimacoes();
 
 	}
@@ -40,7 +35,7 @@ public class Player extends Entity{
 	     	
 	}
 	public void render(Graphics g) {
-		 g.drawImage(animacoes[acaoDoJogador][aniIndex], (int) x, (int) y, 256, 160, null);
+		 g.drawImage(animacoes[acaoDoJogador][aniIndex], (int) x, (int) y, width, height, null);
 	}
 
 	private void atualizarContagemDeAnimacao() {
@@ -100,24 +95,13 @@ public class Player extends Entity{
 	    }
 	
 	 private void carregarAnimacoes() {
-		 InputStream is = getClass().getResourceAsStream("img_jogador.png");
-	        try {
-	        	BufferedImage img = ImageIO.read(is);
-	        	
+		 		BufferedImage img = LoadSave.GetSpriteAtlas(LoadSave.PLAYER_ATLAS);
+	      
 	            animacoes = new BufferedImage[5][4];
 		        for (int j = 0; j < animacoes.length; j++)
 		            for (int i = 0; i < animacoes[j].length; i++)
 		                animacoes[j][i] = img.getSubimage(i * 64, j * 40, 64, 40);
 		        
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        } finally {
-	            try {
-	                is.close();
-	            } catch (IOException e) {
-	                e.printStackTrace();
-	           }
-              }	       
             }
     public void resetDirBooleans() {
     	esquerda = false;
