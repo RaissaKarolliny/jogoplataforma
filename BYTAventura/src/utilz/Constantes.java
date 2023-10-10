@@ -24,10 +24,11 @@ public class Constantes {
                 case CORRENDO:
                     return 4;
                 case PARADO:
-                    return 5;
+                    return 4;
                 case ATACAR:
                     return 4;
                 case PULAR:
+                	return 4;
                 case ATAQUE_1:
                 case ATAQUE_PULAR_1:
                 case ATAQUE_PULAR_2:
@@ -35,6 +36,7 @@ public class Constantes {
                 case SOLO:
                     return 2;
                 case CAIR:
+                	return 4;
                 default:
                     return 1;
             }

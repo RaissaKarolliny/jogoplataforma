@@ -20,18 +20,27 @@ public class Player extends Entity{
 	private BufferedImage[][] animacoes;
     private int aniTick, aniIndex, aniVelocidade = 25;
     private int acaoDoJogador = PARADO;
-    private boolean esquerda,cima,direita,baixo;
+    private boolean esquerda,cima,direita,baixo,pular;
     private boolean movimentando = false, atacando = false;
     private float playerSpeed= 1.0f;
     private int[][] lvlData;
-    private float xDrawOffset = 40 * Jogo.SCALE;
+    private float xDrawOffset = 50* Jogo.SCALE;
 	private float yDrawOffset = 15* Jogo.SCALE;
+	
+	//gravidade//
+	private float airSpeed = 0f;
+	private float gravity = 0.04f * Jogo.SCALE;
+	private float jumpSpeed = -2.25f * Jogo.SCALE;
+	private float fallSpeedAfterCollision = 0.5f * Jogo.SCALE;
+	private boolean inAir = false;
+
 
     
 	public Player(float x, float y, int width, int height) {
 		super(x, y, width, height);
 		carregarAnimacoes();
-		initHitbox(x,y, 40* Jogo.SCALE, 47* Jogo.SCALE);
+		//largura, altura
+		initHitbox(x,y, 30* Jogo.SCALE, 45* Jogo.SCALE);
 		
 
 	}
@@ -69,7 +78,12 @@ public class Player extends Entity{
 	            acaoDoJogador = CORRENDO;
 	        else
 	            acaoDoJogador = PARADO;
-	        
+	        if(inAir) {
+	        	if(airSpeed < 0)
+	        	acaoDoJogador = PULAR;
+	        	else
+	        		acaoDoJogador = CAIR ;
+	        }
 	        if(atacando)
 	        	acaoDoJogador = ATAQUE_1;
 	        if(startAni != acaoDoJogador)
@@ -84,33 +98,62 @@ public class Player extends Entity{
 
 		private void atualizarPosicao() {
 	    	movimentando= false;
-	    	if(!esquerda && !direita && !cima && !baixo)
+	    	if(pular)
+	    		pular();
+	    	if(!esquerda && !direita && !inAir)
 	    		return;
-	    	float xSpeed = 0, ySpeed = 0;
-	    	if(esquerda && !direita) 
-	    		xSpeed = -playerSpeed;
-	    	else if (direita && !esquerda)
-	    		xSpeed = playerSpeed;
+	    	float xSpeed = 0;
+	    	
+	    	if(esquerda) 
+	    		xSpeed -= playerSpeed;
+	        if (direita)
+	    		xSpeed += playerSpeed;
+	        if(!inAir) 
+	        	if(!IsEntityOnFloor(hitbox, lvlData)) {
+	        		inAir = true;
+	        	
+	        }
 	    		
-	    	if(cima && !baixo) 
-	    		 ySpeed = -playerSpeed;
-	    	else if (baixo && !cima)
-	    		ySpeed = playerSpeed;
-	    	
-	    	//if (CanMoveHere(x + xSpeed,y + ySpeed,width,height, lvlData)) {
-			//	this.x += xSpeed;
-			//	this.y += ySpeed;
-			//	movimentando= true;
-			//} 	
-	    	
-	    	if (CanMoveHere(hitbox.x + xSpeed,hitbox.y + ySpeed,hitbox.width,hitbox.height, lvlData)) {
-	    		hitbox.x += xSpeed;
-	    		hitbox.y += ySpeed;
-				movimentando= true;
-			} 
-	    }
-	
-	 private void carregarAnimacoes() {
+	    	if(inAir) {
+	    		if(CanMoveHere(hitbox.x ,hitbox.y + airSpeed ,hitbox.width,hitbox.height, lvlData)) {
+	    	    	hitbox.y += airSpeed;
+	    	    	airSpeed += gravity;
+	    	    	updateXPos(xSpeed);
+	    	     }else {
+	    	    	 hitbox.y = GetEntityYPosUnderRoofOrAboverFloor(hitbox,airSpeed);
+	    	    	 if(airSpeed > 0 )
+	    	    		 resetInAir();
+	    	    	 else
+	    	    		 airSpeed = fallSpeedAfterCollision;
+	    	    	  updateXPos(xSpeed);
+	    	     }
+	    		
+	    	} else
+	    	   updateXPos(xSpeed);
+	          movimentando = true;
+	    } 	
+	    private void pular() {
+			if(inAir)
+			 return;
+			inAir = true;
+			airSpeed = jumpSpeed;
+		}
+
+		private void resetInAir() {
+			inAir= false;
+			airSpeed = 0;
+			
+   }
+	 private void updateXPos(float xSpeed) {
+		if (CanMoveHere(hitbox.x + xSpeed,hitbox.y,hitbox.width,hitbox.height, lvlData)) {
+	    	hitbox.x += xSpeed;
+		}else {
+			hitbox.x = GetEntityXPosNextToWall(hitbox, xSpeed);
+		}
+			
+		}
+
+	private void carregarAnimacoes() {
 		 		BufferedImage img = LoadSave.GetSpriteAtlas(LoadSave.PLAYER_ATLAS);
 	      
 	            animacoes = new BufferedImage[5][4];
@@ -127,6 +170,8 @@ public class Player extends Entity{
     }
 	public void loadLvlData(int[][] lvlData) {
 		this.lvlData = lvlData;
+	    if(!IsEntityOnFloor(hitbox, lvlData))
+	    	inAir = true;
 	}
     public void setAtaque(boolean atacando) {
     	this.atacando = atacando;
@@ -161,6 +206,9 @@ public class Player extends Entity{
 
 	public void setBaixo(boolean baixo) {
 		this.baixo = baixo;
+	}
+	public void setPular(boolean pular) {
+		this.pular = pular;
 	}
 	
 }

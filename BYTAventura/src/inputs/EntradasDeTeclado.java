@@ -34,6 +34,9 @@ public class EntradasDeTeclado implements KeyListener {
             case KeyEvent.VK_D:
                 painelDoJogo.getJogo().getPlayer().setDireita(false);
                 break;
+            case KeyEvent.VK_SPACE:
+                painelDoJogo.getJogo().getPlayer().setPular(false);
+                break;
               
         }
     }
@@ -52,6 +55,9 @@ public class EntradasDeTeclado implements KeyListener {
          	break;
          case KeyEvent.VK_D:
              painelDoJogo.getJogo().getPlayer().setDireita(true);
+             break;
+         case KeyEvent.VK_SPACE:
+             painelDoJogo.getJogo().getPlayer().setPular(true);
              break;
      }
     }
