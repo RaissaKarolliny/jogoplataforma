@@ -3,6 +3,9 @@ package main;
 import java.awt.Graphics;
 
 import entities.Player;
+import estadosDeJogo.CenaJogo;
+import estadosDeJogo.EstadosDeJogo;
+import estadosDeJogo.Menu;
 import levels.LevelManager;
 
 public class Jogo implements Runnable {
@@ -12,8 +15,10 @@ public class Jogo implements Runnable {
     private Thread threadDoJogo;
     private final int FPS_DEFINIDO = 120;
     private final int UPS_DEFINIDO = 200;
-    private Player player;
-	private LevelManager levelManager;
+    
+    private CenaJogo cenajogo;
+    private Menu menu;
+
 
 	public final static int TILES_DEFAULT_SIZE = 32;
 	public final static float SCALE = 1.5f;
@@ -34,25 +39,45 @@ public class Jogo implements Runnable {
     }
 
     private void initClasses() {
-    	levelManager = new LevelManager(this);
-    	player = new Player(200, 200, (int) (128 * SCALE), (int) (80 * SCALE));
-    	player.loadLvlData(levelManager.getCurrentLevel().getLevelData());
-		
+    	
+    	menu = new Menu(this);
+    	cenajogo = new CenaJogo(this);
+    	
 	}
 
 	private void iniciarLoopDoJogo() {
         threadDoJogo = new Thread(this);
         threadDoJogo.start();
     }
-
+//DEPENDENDO DO NOSSO ESTADO VAMOS PARA A CLASS MENU QUE CONTÉM TUDO DE MENU, 
+//SENÃO VAMOS PARA CLASSE CENAJOGO QUE ACONTECE O JOGO ONDE TEMOS JOGADOR, INIMIGO ETC... TUDO GRAÇAS AO ENUM
     public void atualizar() {
-    	levelManager.update();
-		player.update();
+    	switch(EstadosDeJogo.estado) {
+    	case MENU:
+    		menu.update();
+    		break;
+    		
+    	case CENAJOGO:
+    		cenajogo.update();
+    		break;
+    	default:
+    		break;
+    	}
+    	
     }
     
     public void render(Graphics g) {
-    	levelManager.draw(g);
-		player.render(g);
+    	switch(EstadosDeJogo.estado) {
+    	case MENU:
+    		menu.draw(g);
+    		break;
+    		
+    	case CENAJOGO:
+    		cenajogo.draw(g);
+    		break;
+    	default:
+    		break;
+    	}
     }
     
     @Override
@@ -97,10 +122,16 @@ public class Jogo implements Runnable {
         }
     }
     public void windowFocusLost() {
-    	player.resetDirBooleans();
+    	if(EstadosDeJogo.estado == EstadosDeJogo.CENAJOGO) {
+    		cenajogo.getPlayer().resetDirBooleans();
+    	}
     }
     
-    public Player getPlayer() {
-    	return player;
+    public Menu getMenu() {
+    	return menu;
     }
+    public CenaJogo getCenaJogo() {
+    	return cenajogo;
+    }
+  
 }

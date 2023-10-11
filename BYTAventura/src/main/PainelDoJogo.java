@@ -12,7 +12,7 @@ import static main.Jogo.GAME_WIDTH;
 public class PainelDoJogo extends JPanel {
     
 	private EntradasDoMouse entradasDoMouse;
-    private Jogo jogo;
+    private static Jogo jogo;
    
     public PainelDoJogo(Jogo jogo) {
         entradasDoMouse = new EntradasDoMouse(this);
@@ -37,7 +37,13 @@ public class PainelDoJogo extends JPanel {
         super.paintComponent(g);
         jogo.render(g);
  }
-    public Jogo getJogo() {
+    public static Jogo getJogo() {
+    	try {
+			return jogo;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     	return jogo;
     }
 }

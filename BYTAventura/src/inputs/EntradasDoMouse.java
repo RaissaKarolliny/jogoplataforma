@@ -4,6 +4,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
+import estadosDeJogo.EstadosDeJogo;
 import main.PainelDoJogo;
 
 public class EntradasDoMouse implements MouseListener, MouseMotionListener {
@@ -23,13 +24,22 @@ public class EntradasDoMouse implements MouseListener, MouseMotionListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-    
+    	switch(EstadosDeJogo.estado) {
+    	case MENU:
+    		PainelDoJogo.getJogo().getMenu().mouseClicked(e);
+    		break;
+    	case CENAJOGO:
+    		PainelDoJogo.getJogo().getCenaJogo().mouseClicked(e);
+    		break;
+		default:
+			break;
+    	
+    	}
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-    	if(e.getButton() == MouseEvent.BUTTON1)
-    		painelDoJogo.getJogo().getPlayer().setAtaque(true);    
+    	   
     }
 
     @Override
