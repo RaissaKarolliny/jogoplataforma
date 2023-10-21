@@ -24,7 +24,8 @@ public class CarregarSave {
   public static final String Robo_SPRITE = "pc.png";
   public static final String STATUS_BAR = "health_power_bar.png";
   public static final String COMPLETED_IMG = "completed_sprite.png";
-
+//A classe define várias constantes de nomes de arquivos de imagem, como PLAYER_ATLAS, LEVEL_ATLAS, MENU_BUTTONS, etc. 
+  //Esses nomes são usados para carregar as imagens correspondentes.
   public static BufferedImage GetSpriteAtlas(String fileName) {
     BufferedImage img = null;
     InputStream is = CarregarSave.class.getResourceAsStream(""+fileName);
@@ -46,7 +47,10 @@ public class CarregarSave {
       }
     }
     return img;
-  }
+  }//Este método recebe o nome de um arquivo de imagem como parâmetro e carrega essa imagem.
+ // Ele tenta abrir o arquivo de imagem usando ImageIO.read() a partir de um InputStream obtido da classe atual (CarregarSave.class).
+ // Qualquer exceção durante o processo de carregamento da imagem é tratada no bloco catch, onde uma mensagem de erro é impressa.
+ // A imagem carregada é retornada.
 
   public static BufferedImage[] GetAllLevels() {
     URL url = CarregarSave.class.getResource("/lvls");
@@ -79,5 +83,9 @@ public class CarregarSave {
 
     return imgs;
   }
+//Este método é usado para carregar todos os níveis do jogo. Ele obtém uma URL para a pasta de níveis e cria um array de arquivos representando os níveis.
+ //Em seguida, ele organiza esses arquivos em ordem crescente com base nos números dos níveis (nomes de arquivos como "1.png", "2.png", etc.).
+ //Para cada arquivo de nível, ele lê a imagem usando ImageIO.read() e armazena no array imgs.
+ // Finalmente, ele retorna o array de imagens de nível carregadas.
 
 }

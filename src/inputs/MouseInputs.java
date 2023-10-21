@@ -14,7 +14,8 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
   public MouseInputs(JogoPanel JogoPanel) {
     this.JogoPanel = JogoPanel;
   }
-
+//A classe começa declarando uma variável JogoPanel para armazenar a referência ao painel do jogo em que os eventos do mouse estão sendo tratados.
+ // O construtor da classe recebe uma instância do JogoPanel e atribui-a à variável JogoPanel.
   @Override
   public void mouseDragged(MouseEvent e) {
     switch (Jogostate.state) {
@@ -24,8 +25,10 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
     default:
       break;
 
-    }
-
+    }/*Este método é chamado quando o mouse é arrastado (movido com um botão pressionado).
+		Dependendo do estado do jogo (representado pela variável Jogostate.state), ele redireciona 
+		o evento de mouse arrastado para o estado relevante do jogo, permitindo que o estado lide com o movimento do mouse.
+     	*/
   }
 
   @Override
@@ -41,7 +44,8 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
       break;
 
     }
-
+    //Este método é chamado quando o mouse é movido (sem botões pressionados).
+   // Assim como o método mouseDragged, ele verifica o estado atual do jogo e redireciona o evento de movimento do mouse para o estado apropriado.
   }
 
   @Override
@@ -54,7 +58,8 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
       break;
 
     }
-
+//Este método é chamado quando um clique do mouse é detectado (um clique é um pressionar e liberar do botão do mouse).
+//Novamente, dependendo do estado do jogo, ele redireciona o evento de clique do mouse para o estado relevante do jogo.
   }
 
   @Override
@@ -70,7 +75,8 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
       break;
 
     }
-
+//Este método é chamado quando um botão do mouse é pressionado (antes de ser liberado).
+//Ele verifica o estado do jogo e redireciona o evento de pressionar o botão do mouse para o estado apropriado.
   }
 
   @Override
@@ -86,6 +92,8 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
       break;
 
     }
+  //Este método é chamado quando um botão do mouse é liberado (após ter sido pressionado).
+  //Dependendo do estado do jogo, ele redireciona o evento de liberar o botão do mouse para o estado relevante do jogo.
 
   }
 

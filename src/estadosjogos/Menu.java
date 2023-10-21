@@ -21,8 +21,11 @@ public class Menu extends Estado implements Estadomethods {
     loadBackground();
     backgroundfundoinicial = CarregarSave.GetSpriteAtlas(CarregarSave.MENU_BACKGROUND_IMG);
 
-  }
-
+  }/*A classe começa declarando várias variáveis e objetos necessários para o menu, como botões de menu, imagens de fundo e coordenadas
+  São inicializadas as imagens de fundo e os botões do menu. Os botões do menu estão em um array chamado buttons.
+*/
+  
+  //O construtor da classe é chamado quando um objeto da classe é instanciado. No construtor, as imagens de fundo e os botões do menu são carregados.
   private void loadBackground() {
     backgroundImg = CarregarSave.GetSpriteAtlas(CarregarSave.MENU_BACKGROUND);
     menuLARGURA = (int) (backgroundImg.getWidth() * Jogo.ESCALA);
@@ -31,19 +34,22 @@ public class Menu extends Estado implements Estadomethods {
     menuY = (int) (45 * Jogo.ESCALA);
 
   }
-
+//Este método é responsável por carregar as imagens de fundo do menu.
+ // As dimensões da imagem de fundo são dimensionadas com base no valor da escala do jogo, e as coordenadas de onde a imagem deve ser desenhada também são definidas.
   private void loadButtons() {
     buttons[0] = new MenuButton(Jogo.Jogo_LARGURA / 2, (int) (150 * Jogo.ESCALA), 0, Jogostate.PLAYING);
     buttons[1] = new MenuButton(Jogo.Jogo_LARGURA / 2, (int) (220 * Jogo.ESCALA), 1, Jogostate.OPTIONS);
     buttons[2] = new MenuButton(Jogo.Jogo_LARGURA / 2, (int) (290 * Jogo.ESCALA), 2, Jogostate.QUIT);
   }
-
+//Este método é responsável por criar os botões do menu.
+ // São criados três botões: "PLAYING", "OPTIONS" e "QUIT" e são posicionados verticalmente no centro da tela.
   @Override
   public void atualizar() {
     for (MenuButton mb : buttons)
       mb.atualizar();
   }
-
+//Este método é chamado para atualizar o estado do menu.
+ // Ele percorre os botões do menu e os atualiza.
   @Override
   public void draw(Graphics g) {
 
@@ -53,15 +59,16 @@ public class Menu extends Estado implements Estadomethods {
     for (MenuButton mb : buttons)
       mb.draw(g);
   }
-
+//Este método é chamado para renderizar o estado do menu.
+ // Ele desenha as imagens de fundo e os botões na tela.
   @Override
-  public void mouseClicked(MouseEvent e) {
+  public void mouseClicked(MouseEvent e) { //Esses métodos são chamados em resposta a eventos do mouse
     // TODO Auto-generated method stub
 
   }
 
   @Override
-  public void mousePressed(MouseEvent e) {
+  public void mousePressed(MouseEvent e) {    //Esses métodos são chamados em resposta a eventos do mouse
     for (MenuButton mb : buttons) {
       if (isIn(e, mb)) {
         mb.setMousePressed(true);
@@ -71,7 +78,7 @@ public class Menu extends Estado implements Estadomethods {
   }
 
   @Override
-  public void mouseReleased(MouseEvent e) {
+  public void mouseReleased(MouseEvent e) {  //Esses métodos são chamados em resposta a eventos do mouse
     for (MenuButton mb : buttons) {
       if (isIn(e, mb)) {
         if (mb.isMousePressed())
@@ -101,7 +108,8 @@ public class Menu extends Estado implements Estadomethods {
         break;
       }
 
-  }
+  }//Este método é usado para redefinir os botões do menu. 
+  //Ele é chamado quando um botão do mouse é liberado para garantir que nenhum botão continue sendo pressionado.
 
   @Override
   public void keyPressed(KeyEvent e) {

@@ -5,7 +5,10 @@ import main.Jogo;
 public class Constantes {
 
   public static class InimigoConstantes {
+//Contém constantes relacionadas aos inimigos do jogo, como Robôs (Robo) e Dorgivais. Ela define valores como estados (parado, correndo, ataque, etc.),
+//tamanhos padrão, deslocamentos de desenho e métodos para obter quantidades de sprites, vida máxima e dano dos inimigos.
     public static final int Robo = 0;
+    public static final int Dorgival = 1;
 
     public static final int PARADO = 0;
     public static final int CORRENDO = 1;
@@ -15,17 +18,27 @@ public class Constantes {
 
     public static final int Robo_LARGURA_DEFAULT = 72;
     public static final int Robo_ALTURA_DEFAULT = 32;
-
     public static final int Robo_LARGURA = (int) (Robo_LARGURA_DEFAULT * Jogo.ESCALA);
     public static final int Robo_ALTURA = (int) (Robo_ALTURA_DEFAULT * Jogo.ESCALA);
-
     public static final int Robo_DRAWOFFSET_X = (int) (26 * Jogo.ESCALA);
     public static final int Robo_DRAWOFFSET_Y = (int) (9 * Jogo.ESCALA);
 
+
+    public static final int Dorgival_LARGURA_DEFAULT = 72;
+    public static final int Dorgival_ALTURA_DEFAULT = 32;
+
+    public static final int Dorgival_LARGURA = (int) (Robo_LARGURA_DEFAULT * Jogo.ESCALA);
+    public static final int Dorgival_ALTURA = (int) (Robo_ALTURA_DEFAULT * Jogo.ESCALA);
+
+    public static final int Dorgival_DRAWOFFSET_X = (int) (26 * Jogo.ESCALA);
+    public static final int Dorgival_DRAWOFFSET_Y = (int) (9 * Jogo.ESCALA);
+
+    
     public static int GetQuantidadeSprite(int Inimigo_type, int Inimigo_state) {
 
       switch (Inimigo_type) {
       case Robo:
+      case Dorgival:
         switch (Inimigo_state) {
         case PARADO:
           return 5;
@@ -48,6 +61,8 @@ public class Constantes {
       switch (Inimigo_type) {
       case Robo:
         return 10;
+      case Dorgival:
+    	return 50;
       default:
         return 1;
       }
@@ -57,6 +72,8 @@ public class Constantes {
       switch (Inimigo_type) {
       case Robo:
         return 15;
+      case Dorgival:
+      	return 50;
       default:
         return 0;
       }
@@ -65,19 +82,11 @@ public class Constantes {
 
   }
 
-  public static class Environment {
-    public static final int BIG_CLOUD_LARGURA_DEFAULT = 448;
-    public static final int BIG_CLOUD_ALTURA_DEFAULT = 101;
-    public static final int SMALL_CLOUD_LARGURA_DEFAULT = 74;
-    public static final int SMALL_CLOUD_ALTURA_DEFAULT = 24;
-
-    public static final int BIG_CLOUD_LARGURA = (int) (BIG_CLOUD_LARGURA_DEFAULT * Jogo.ESCALA);
-    public static final int BIG_CLOUD_ALTURA = (int) (BIG_CLOUD_ALTURA_DEFAULT * Jogo.ESCALA);
-    public static final int SMALL_CLOUD_LARGURA = (int) (SMALL_CLOUD_LARGURA_DEFAULT * Jogo.ESCALA);
-    public static final int SMALL_CLOUD_ALTURA = (int) (SMALL_CLOUD_ALTURA_DEFAULT * Jogo.ESCALA);
-  }
+ 
 
   public static class UI {
+//Contém classes internas relacionadas à interface do usuário (UI) do jogo.
+//Isso inclui botões do menu, botões de pausa, botões de som, botões de controles do jogo e tamanhos padrão para esses elementos.
     public static class Buttons {
       public static final int B_LARGURA_DEFAULT = 140;
       public static final int B_ALTURA_DEFAULT = 56;
@@ -108,6 +117,7 @@ public class Constantes {
   }
 
   public static class Direcoes {
+// Define constantes para direções como ESQUERDA, CIMA, DIREITA e BAIXO.
     public static final int ESQUERDA = 0;
     public static final int UP = 1;
     public static final int DIREITA = 2;
@@ -115,6 +125,8 @@ public class Constantes {
   }
 
   public static class JogadorConstantes {
+	  // Contém constantes relacionadas ao personagem jogável (jogador) no jogo.
+	  //Ela define estados (parado, correndo, etc.) e métodos para obter a quantidade de sprites para cada ação do jogador.
     public static final int PARADO = 0;
     public static final int CORRENDO = 1;
     public static final int PULAR = 2;

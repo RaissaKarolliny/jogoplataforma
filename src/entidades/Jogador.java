@@ -14,6 +14,12 @@ import main.Jogo;
 import utilz.CarregarSave;
 
 public class Jogador extends Entidades {
+	
+	
+/*Nesta parte, a classe Jogador é declarada como uma subclasse de Entidades.
+ * A classe importa várias constantes, classes e recursos necessários para o funcionamento do jogador. */
+	
+	
   private BufferedImage[][] Animacaos;
   private int aniTick, aniIndex, aniVelocidade = 25;
   private int jogadorAcao = PARADO;
@@ -23,7 +29,9 @@ public class Jogador extends Entidades {
   private int[][] lvlData;
   private float xDrawOffset = 21 * Jogo.ESCALA;
   private float yDrawOffset = 4 * Jogo.ESCALA;
-
+/*Nesta seção, várias variáveis de instância são declaradas. Elas incluem informações sobre as animações do jogador, velocidades, estado do jogador
+ *  (como "PARADO" ou "CORRENDO"), flags para direção do movimento, informações sobre o terreno e posicionamento na tela.
+ */
   
   private float VelocidadeNoAr = 0f;
   private float gravidade = 0.04f * Jogo.ESCALA;
@@ -55,6 +63,14 @@ public class Jogador extends Entidades {
 
   private boolean ataqueChecado;
   private Jogando jogando;
+  
+  /*Nesta parte, mais variáveis de instância são declaradas, incluindo informações relacionadas à física do personagem,
+   *como gravidade e velocidade de pulo. Além disso, há variáveis para representar a barra de vida do jogador e sua posição na tela.
+   * A classe também possui uma área de ataque (attackBox) para o jogador.
+   */
+  
+  
+  
 
   public Jogador(float x, float y, int LARGURA, int ALTURA, Jogando jogando) {
     super(x, y, LARGURA, ALTURA);
@@ -63,18 +79,22 @@ public class Jogador extends Entidades {
     initHitbox(x, y, (int) (20 * Jogo.ESCALA), (int) (27 * Jogo.ESCALA));
     initAttackBox();
   }
-
+/*O construtor da classe Jogador é definido para criar um objeto Jogador com uma posição inicial (x, y),
+ *  largura e altura específicas e uma referência ao objeto Jogando. 
+ * O construtor também chama métodos para carregar animações, inicializar a "hitbox" e a attackBox.
+ */
   public void setSpawn(Point spawn) {
     this.x = spawn.x;
     this.y = spawn.y;
     hitbox.x = x;
     hitbox.y = y;
   }
-
+//O método setSpawn é usado para posicionar o jogador em um ponto específico do mapa
   private void initAttackBox() {
     attackBox = new Rectangle2D.Float(x, y, (int) (20 * Jogo.ESCALA), (int) (20 * Jogo.ESCALA));
   }
-
+//O método initAttackBox inicializa a attackBox do jogador com uma posição e tamanho específicos.
+ 
   public void atualizar() {
     atualizarHealthBar();
 
@@ -100,6 +120,7 @@ public class Jogador extends Entidades {
 
   }
 
+
   private void atualizarAttackBox() {
     if (direita)
       attackBox.x = hitbox.x + hitbox.width + (int) (Jogo.ESCALA * 10);
@@ -112,24 +133,25 @@ public class Jogador extends Entidades {
   private void atualizarHealthBar() {
     healthLARGURA = (int) ((vidaAtual / (float) vidaMax) * barraVidaLARGURA);
   }
-
+  
+////O método atualizar é responsável por atualizar o estado do jogador, incluindo sua saúde, posição, animação e ataque.
   public void render(Graphics g, int lvlOffset) {
     g.drawImage(Animacaos[jogadorAcao][aniIndex], (int) (hitbox.x - xDrawOffset) - lvlOffset + flipX, (int) (hitbox.y - yDrawOffset), LARGURA * flipW, ALTURA, null);
 
     drawUI(g);
   }
-
+//O método render é usado para desenhar o jogador na tela, incluindo sua animação, posição e barra de vida.
   private void desenharCaixaAtaque(Graphics g, int lvlOffsetX) {
     g.setColor(Color.red);
     g.drawRect((int) attackBox.x - lvlOffsetX, (int) attackBox.y, (int) attackBox.width, (int) attackBox.height);
   }
-
+//O método desenharCaixaAtaque desenha a attackBox do jogador na tela,so uso quando vou debugar o box de ataque.
   private void drawUI(Graphics g) {
     g.drawImage(statusBarImg, statusBarX, statusBarY, statusBarLARGURA, statusBarALTURA, null);
     g.setColor(Color.red);
     g.fillRect(barraVidaXStart + statusBarX, barraVidaYStart + statusBarY, healthLARGURA, barraVidaALTURA);
   }
-
+//O método drawUI desenha a interface do usuário, incluindo a barra de vida do jogador na tela
   private void atualizarAnimacaoTick() {
     aniTick++;
     if (aniTick >= aniVelocidade) {
@@ -144,6 +166,7 @@ public class Jogador extends Entidades {
     }
 
   }
+  //metodo que percorre a matriz do sprite para fluir a animação.
 
   private void setAnimacao() {
     int startAni = jogadorAcao;
@@ -171,6 +194,7 @@ public class Jogador extends Entidades {
     if (startAni != jogadorAcao)
       resetAniTick();
   }
+  //metodo que diz qual animação sera retornada, olhando as constantes retornadas na classe constantes.
 
   private void resetAniTick() {
     aniTick = 0;
@@ -258,26 +282,27 @@ public class Jogador extends Entidades {
       for (int i = 0; i < Animacaos[j].length; i++)
         Animacaos[j][i] = img.getSubimage(i * 64, j * 40, 64, 40);
 
-   // statusBarImg = CarregarSave.GetSpriteAtlas(CarregarSave.STATUS_BAR);
+    statusBarImg = CarregarSave.GetSpriteAtlas(CarregarSave.STATUS_BAR);
   }
-
+//O método carregarAnimacoes carrega as animações do jogador a partir de uma imagem de sprite e as armazena em um array.
   public void loadLvlData(int[][] lvlData) {
     this.lvlData = lvlData;
     if (!EntidadesNoChao(hitbox, lvlData))
       noAr = true;
   }
-
+//O método loadLvlData é usado para carregar dados do nível do jogo, como informações sobre o terreno,
+//que são usadas para determinar se o jogador está no chão ou no ar.
   public void resetDirBooleans() {
     esquerda = false;
     direita = false;
     cima = false;
     baixo = false;
   }
-
+//O método resetDirBooleans é usado para redefinir as "flags" que representam a direção do jogador.
   public void setAttacking(boolean atacando) {
     this.atacando = atacando;
   }
-
+//O método setAttacking define se o jogador está atacando ou não.
   public boolean eEsquerda() {
     return esquerda;
   }
@@ -328,5 +353,7 @@ public class Jogador extends Entidades {
     if (!EntidadesNoChao(hitbox, lvlData))
       noAr = true;
   }
+  //O método resetAll é usado para redefinir várias informações relacionadas ao jogador, 
+  //como a direção, se ele está no ar, se está atacando, a animação e a saúde.
 
 }

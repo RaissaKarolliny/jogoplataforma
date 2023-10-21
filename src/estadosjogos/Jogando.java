@@ -6,8 +6,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.util.Random;
-
 import entidades.GerenciadoInimigo;
 import entidades.Jogador;
 import levels.NiveisManager;
@@ -16,7 +14,6 @@ import ui.JogoOverOverlay;
 import ui.NiveisCompletedOverlay;
 import ui.PauseOverlay;
 import utilz.CarregarSave;
-import static utilz.Constantes.Environment.*;
 
 public class Jogando extends Estado implements Estadomethods {
   private Jogador jogador;
@@ -32,35 +29,36 @@ public class Jogando extends Estado implements Estadomethods {
   private int direitaBorder = (int) (0.8 * Jogo.Jogo_LARGURA);
   private int maxLvlOffsetX;
 
-  private BufferedImage backgroundImg, bigCloud, smallCloud;
+  private BufferedImage backgroundImg;
 
   private boolean JogoOver;
   private boolean lvlCompleted;
 
   public Jogando(Jogo Jogo) {
+	  // Construtor da classe
     super(Jogo);
-    initClasses();
-
+    initClasses();// Inicializa várias classes do jogo
+    // Carrega a imagem de fundo do jogo
     backgroundImg = CarregarSave.GetSpriteAtlas(CarregarSave.PLAYING_BG_IMG);
 
-    calcLvlOffset();
-    loadStartLevel();
+    calcLvlOffset();// Calcula o deslocamento do nível
+    loadStartLevel();// Carrega o nível inicial
   }
-
+//Carrega o próximo nível do jogo
   public void loadNextLevel() {
-    resetAll();
-    levelManager.loadNextLevel();
-    jogador.setSpawn(levelManager.getCurrentLevel().getJogadorSpawn());
+    resetAll();// Reinicia o estado do jogo
+    levelManager.loadNextLevel();// Carrega o próximo nível
+    jogador.setSpawn(levelManager.getCurrentLevel().getJogadorSpawn());// Define a posição inicial do jogador
   }
-
+  // Carrega o nível inicial
   private void loadStartLevel() {
     GerenciadoInimigo.carregarInimigos(levelManager.getCurrentLevel());
   }
-
+  // Calcula o deslocamento do nível
   private void calcLvlOffset() {
     maxLvlOffsetX = levelManager.getCurrentLevel().getLvlOffset();
   }
-
+  // Inicializa várias classes do jogo
   private void initClasses() {
     levelManager = new NiveisManager(Jogo);
     GerenciadoInimigo = new GerenciadoInimigo(this);
@@ -73,21 +71,21 @@ public class Jogando extends Estado implements Estadomethods {
     JogoOverOverlay = new JogoOverOverlay(this);
     levelCompletedOverlay = new NiveisCompletedOverlay(this);
   }
-
+  // Método de atualização do jogo
   @Override
   public void atualizar() {
     if (paused) {
-      pauseOverlay.atualizar();
+      pauseOverlay.atualizar();// Atualiza a tela de pausa
     } else if (lvlCompleted) {
-      levelCompletedOverlay.atualizar();
+      levelCompletedOverlay.atualizar(); // Atualiza a tela de nível concluído
     } else if (!JogoOver) {
-      levelManager.atualizar();
-      jogador.atualizar();
+      levelManager.atualizar();// Atualiza o gerenciador de níveis
+      jogador.atualizar();// Atualiza o jogador
       GerenciadoInimigo.atualizar(levelManager.getCurrentLevel().getLevelData(), jogador);
-      checkCloseToBorder();
+      checkCloseToBorder();// Verifica a posição do jogador em relação à tela
     }
   }
-
+  // Verifica a proximidade do jogador em relação às bordas da tela
   private void checkCloseToBorder() {
     int jogadorX = (int) jogador.getHitbox().x;
     int diff = jogadorX - xLvlOffset;
@@ -102,27 +100,27 @@ public class Jogando extends Estado implements Estadomethods {
     else if (xLvlOffset < 0)
       xLvlOffset = 0;
   }
-
+  // Método de desenho do jogo
   @Override
   public void draw(Graphics g) {
     g.drawImage(backgroundImg, 0, 0, Jogo.Jogo_LARGURA, Jogo.Jogo_ALTURA, null);
 
 
-    levelManager.draw(g, xLvlOffset);
-    jogador.render(g, xLvlOffset);
-    GerenciadoInimigo.draw(g, xLvlOffset);
+    levelManager.draw(g, xLvlOffset);// Desenha o nível
+    jogador.render(g, xLvlOffset);// Renderiza o jogador
+    GerenciadoInimigo.draw(g, xLvlOffset);// Desenha os inimigos
 
     if (paused) {
       g.setColor(new Color(0, 0, 0, 150));
       g.fillRect(0, 0, Jogo.Jogo_LARGURA, Jogo.Jogo_ALTURA);
-      pauseOverlay.draw(g);
+      pauseOverlay.draw(g);// Desenha a tela de pausa
     } else if (JogoOver)
-      JogoOverOverlay.draw(g);
+      JogoOverOverlay.draw(g);// Desenha a tela de jogo encerrado
     else if (lvlCompleted)
-      levelCompletedOverlay.draw(g);
+      levelCompletedOverlay.draw(g);// Desenha a tela de nível concluído
   }
 
-
+  // Reseta o estado do jogo
   public void resetAll() {
     JogoOver = false;
     paused = false;
@@ -130,22 +128,22 @@ public class Jogando extends Estado implements Estadomethods {
     jogador.resetAll();
     GerenciadoInimigo.resetAllEnemies();
   }
-
+  // Define se o jogo foi encerrado
   public void setJogoOver(boolean JogoOver) {
     this.JogoOver = JogoOver;
   }
-
+  // Verifica colisões com inimigos
   public void checkInimigoHit(Rectangle2D.Float attackBox) {
     GerenciadoInimigo.checkInimigoHit(attackBox);
   }
-
+  // Manipuladores de eventos de mouse
   @Override
   public void mouseClicked(MouseEvent e) {
     if (!JogoOver)
       if (e.getButton() == MouseEvent.BUTTON1)
         jogador.setAttacking(true);
   }
-
+//Manipuladores de eventos de teclado
   @Override
   public void keyPressed(KeyEvent e) {
     if (JogoOver)
@@ -219,27 +217,28 @@ public class Jogando extends Estado implements Estadomethods {
         levelCompletedOverlay.mouseMoved(e);
     }
   }
-
+//Define se o nível foi concluído
   public void setLevelCompleto(boolean levelCompleted) {
     this.lvlCompleted = levelCompleted;
   }
-
+  // Define o deslocamento máximo do nível
   public void setMaxLvlOffset(int lvlOffset) {
     this.maxLvlOffsetX = lvlOffset;
   }
+  // Despausa o jogo
 
   public void unpauseJogo() {
     paused = false;
   }
-
+  // Quando o foco da janela é perdido, redefine as direções do jogador
   public void windowFocusLost() {
     jogador.resetDirBooleans();
   }
-
+  // Retorna o jogador
   public Jogador getJogador() {
     return jogador;
   }
-
+  // Retorna o gerenciador de inimigos
   public GerenciadoInimigo getGerenciadoInimigo() {
     return GerenciadoInimigo;
   }

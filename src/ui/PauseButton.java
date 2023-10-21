@@ -14,11 +14,14 @@ public class PauseButton {
     this.ALTURA = ALTURA;
     createBounds();
   }
-
+//O construtor é chamado quando um objeto PauseButton é criado.
+  //Ele recebe as coordenadas x e y da posição do botão, bem como as dimensões LARGURA e ALTURA do botão.
+  ////O construtor inicializa os campos da classe com base nos argumentos passados e chama o método createBounds() para criar o
+  //retângulo que representa a área do botão.
   private void createBounds() {
     bounds = new Rectangle(x, y, LARGURA, ALTURA);
   }
-
+//Este método cria o retângulo bounds que representa a área do botão com base nas coordenadas x e y e nas dimensões LARGURA e ALTURA.
   public int getX() {
     return x;
   }
@@ -58,5 +61,6 @@ public class PauseButton {
   public void setBounds(Rectangle bounds) {
     this.bounds = bounds;
   }
-
+///Métodos Getters e Setters: A classe fornece métodos getters e setters para as propriedades x, y, LARGURA, ALTURA, e bounds. 
+//Esses métodos permitem acessar e modificar essas propriedades a partir de outras partes do código.
 }
