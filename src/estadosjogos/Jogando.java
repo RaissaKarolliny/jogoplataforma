@@ -33,6 +33,7 @@ public class Jogando extends Estado implements Estadomethods {
 
   private boolean JogoOver;
   private boolean lvlCompleted;
+  private boolean jogadorMorrendo;
 
   public Jogando(Jogo Jogo) {
 	  // Construtor da classe
@@ -78,7 +79,11 @@ public class Jogando extends Estado implements Estadomethods {
       pauseOverlay.atualizar();// Atualiza a tela de pausa
     } else if (lvlCompleted) {
       levelCompletedOverlay.atualizar(); // Atualiza a tela de nível concluído
-    } else if (!JogoOver) {
+    } else if (JogoOver) {
+    	//jogoOverOverlay.atualizar();
+    }else if (jogadorMorrendo) {
+    	jogador.atualizar(); 	
+    }else{
       levelManager.atualizar();// Atualiza o gerenciador de níveis
       jogador.atualizar();// Atualiza o jogador
       GerenciadoInimigo.atualizar(levelManager.getCurrentLevel().getLevelData(), jogador);
@@ -242,5 +247,9 @@ public class Jogando extends Estado implements Estadomethods {
   public GerenciadoInimigo getGerenciadoInimigo() {
     return GerenciadoInimigo;
   }
+public void setJogadorMorrendo(boolean jogadorMorrendo) {
+	this.jogadorMorrendo = jogadorMorrendo;
+	
+}
 
 }

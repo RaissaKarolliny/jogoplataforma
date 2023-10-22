@@ -3,6 +3,7 @@ package ui;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
+import estadosjogos.Jogostate;
 import utilz.CarregarSave;
 import static utilz.Constantes.UI.URMButtons.*;
 
@@ -10,7 +11,8 @@ public class UrmButton extends PauseButton {
   private BufferedImage[] imgs;
   private int rowIndex, index;
   private boolean mouseOver, mousePressed;
-
+  private Jogostate state;
+  
   public UrmButton(int x, int y, int LARGURA, int ALTURA, int rowIndex) {
     super(x, y, LARGURA, ALTURA);
     this.rowIndex = rowIndex;
@@ -66,3 +68,4 @@ public class UrmButton extends PauseButton {
   }
 //Métodos getters e setters: A classe inclui métodos getters e setters para obter e definir o estado das variáveis mouseOver e mousePressed.
 }
+

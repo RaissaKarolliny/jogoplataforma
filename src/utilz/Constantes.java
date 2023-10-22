@@ -132,13 +132,13 @@ public class Constantes {
     public static final int PULAR = 2;
     public static final int CAINDO = 3;
     public static final int ATAQUE = 4;
-    public static final int BATE = 5;
-    public static final int MORTO = 8;
+    public static final int BATE = 6;
+    public static final int MORTO = 5;
 
     public static int GetQuantidadeSprite(int jogador_action) {
       switch (jogador_action) {
       case MORTO:
-        return 4;
+        return 5;
       case CORRENDO:
         return 4;
       case PARADO:

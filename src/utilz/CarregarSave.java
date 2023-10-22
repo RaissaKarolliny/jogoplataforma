@@ -24,6 +24,7 @@ public class CarregarSave {
   public static final String Robo_SPRITE = "pc.png";
   public static final String STATUS_BAR = "health_power_bar.png";
   public static final String COMPLETED_IMG = "completed_sprite.png";
+  public static final String MENU_FINAL = "death_screen.png";
 //A classe define várias constantes de nomes de arquivos de imagem, como PLAYER_ATLAS, LEVEL_ATLAS, MENU_BUTTONS, etc. 
   //Esses nomes são usados para carregar as imagens correspondentes.
   public static BufferedImage GetSpriteAtlas(String fileName) {

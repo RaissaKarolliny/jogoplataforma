@@ -99,8 +99,17 @@ public class Jogador extends Entidades {
     atualizarHealthBar();
 
     if (vidaAtual <= 0) {
-      jogando.setJogoOver(true);
-      return;
+    	if(jogadorAcao != MORTO){
+    		jogadorAcao = MORTO;
+    		aniTick = 0;
+    		aniIndex = 0;
+    		jogando.setJogadorMorrendo(true);
+    	} else if(aniIndex == GetQuantidadeSprite(MORTO) - 1  && aniTick >= aniVelocidade - 1) {
+    		jogando.setJogoOver(true);
+    	}else
+    		atualizarAnimacaoTick();
+    	
+    	 return;
     }
 
     atualizarAttackBox();
