@@ -21,7 +21,7 @@ public class CarregarSave {
   public static final String VOLUME_BUTTONS = "volume_buttons.png";
   public static final String MENU_BACKGROUND_IMG = "UFCA_alto.png";
   public static final String PLAYING_BG_IMG = "playing_bg_img.png";
-  public static final String Robo_SPRITE = "pc.png";
+  public static final String Robo_SPRITE = "dorgivalOHomi.png";
   public static final String STATUS_BAR = "health_power_bar.png";
   public static final String COMPLETED_IMG = "completed_sprite.png";
   public static final String MENU_FINAL = "death_screen.png";

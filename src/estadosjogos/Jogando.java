@@ -156,13 +156,13 @@ public class Jogando extends Estado implements Estadomethods {
     else
       switch (e.getKeyCode()) {
       case KeyEvent.VK_A:
-        jogador.setLeft(true);
+        jogador.setEsquerda(true);
         break;
       case KeyEvent.VK_D:
-        jogador.setRight(true);
+        jogador.setDireita(true);
         break;
       case KeyEvent.VK_SPACE:
-        jogador.setJump(true);
+        jogador.setPulando(true);
         break;
       case KeyEvent.VK_ESCAPE:
         paused = !paused;
@@ -175,13 +175,13 @@ public class Jogando extends Estado implements Estadomethods {
     if (!JogoOver)
       switch (e.getKeyCode()) {
       case KeyEvent.VK_A:
-        jogador.setLeft(false);
+        jogador.setEsquerda(false);
         break;
       case KeyEvent.VK_D:
-        jogador.setRight(false);
+        jogador.setDireita(false);
         break;
       case KeyEvent.VK_SPACE:
-        jogador.setJump(false);
+        jogador.setPulando(false);
         break;
       }
 

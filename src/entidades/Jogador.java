@@ -24,7 +24,7 @@ public class Jogador extends Entidades {
   private int aniTick, aniIndex, aniVelocidade = 25;
   private int jogadorAcao = PARADO;
   private boolean movendo = false, atacando = false;
-  private boolean esquerda, cima, direita, baixo, pulo;
+  private boolean esquerda, direita, pulo;
   private float velocidadeJogador = 1.0f * Jogo.ESCALA;
   private int[][] lvlData;
   private float xDrawOffset = 21 * Jogo.ESCALA;
@@ -304,8 +304,6 @@ public class Jogador extends Entidades {
   public void resetDirBooleans() {
     esquerda = false;
     direita = false;
-    cima = false;
-    baixo = false;
   }
 //O método resetDirBooleans é usado para redefinir as "flags" que representam a direção do jogador.
   public void setAttacking(boolean atacando) {
@@ -316,35 +314,19 @@ public class Jogador extends Entidades {
     return esquerda;
   }
 
-  public void setLeft(boolean esquerda) {
+  public void setEsquerda(boolean esquerda) {
     this.esquerda = esquerda;
   }
 
-  public boolean isUp() {
-    return cima;
-  }
-
-  public void setUp(boolean cima) {
-    this.cima = cima;
-  }
-
-  public boolean isRight() {
+  public boolean eDireita() {
     return direita;
   }
 
-  public void setRight(boolean direita) {
+  public void setDireita(boolean direita) {
     this.direita = direita;
   }
 
-  public boolean isDown() {
-    return baixo;
-  }
-
-  public void setDown(boolean baixo) {
-    this.baixo = baixo;
-  }
-
-  public void setJump(boolean pulo) {
+  public void setPulando(boolean pulo) {
     this.pulo = pulo;
   }
 
